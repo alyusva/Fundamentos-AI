@@ -1,0 +1,53 @@
+% EJERCICIOS SESION 1 
+
+%EJERCICIO 1-Determinar si una lista es un palíndromo:
+%Predicado principal: L es un palíndromo si LInversa = L
+palindromo(L) :- 
+    invertir(L, L).
+%Predicado auxiliar para invertir una lista.
+invertir([], []).  % Caso base lista vacía 
+invertir([Inicio|Cola], L_Invertida) :-
+    invertir(Cola, ColaInvertida),  % Invertir la cola
+    append(ColaInvertida, [Inicio], L_Invertida).  %append(a,b,c) -> c = [a | b]
+
+%Ejemplos:
+%?- palindromo([r, a, d, a, r]). - true
+%?- palindromo([a, b, c]).  - false
+%------------------------------------------------------------------------
+%EJERCICIO 2-Encontrar el elemento máximo en una lista:
+maximo([Max], Max). %caso base lista con solo un elemento sera el maximo
+maximo([Inicio|Resto], Max):-
+    maximo(Resto, MaxResto), %regla recursiva: saco el máx del resto
+    (Inicio >= MaxResto -> Max = Inicio |  %comparo el inicio con MaxResto
+    					  Max = MaxResto).
+
+%Ejemplos:
+%maximo([3, 1, 7, 4, 2], 7). - true
+%maximo([1, 2, 3], 3).  - true 
+%------------------------------------------------------------------------
+%EJERCICIO 3-Contar los elementos en una lista:
+longitud([],0).%Caso base solo un elemento 
+
+longitud([_|Resto], N) :- %Caso recursivo _ inicio indiferente, siempre NInicio =1
+    longitud(Resto, NResto), %Calculo N del resto
+    N is NResto + 1.  %Sumo al contador
+
+%Ejemplo:
+%longitud([a, b, c], 3). - true 
+%------------------------------------------------------------------------
+%EJERCICIO 4-Generar la sucesión de Fibonacci:
+%Caso base:
+fibonacci(0,0).
+fibonacci(1,1).
+fibonacci(N,R) :-
+    N > 1 ->  N1 is N-1, N2 is N-2,
+    fibonacci(N1,R1),
+    fibonacci(N2,R2),
+    R is R1 + R2.
+    
+%Ejemplo:
+%fibonacci(7, 13). - true
+%------------------------------------------------------------------------
+
+
+
